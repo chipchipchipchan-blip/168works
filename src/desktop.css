@@ -1,0 +1,59 @@
+/* PCのトップページ専用。高さを固定せず、内容が多い場合は自然に伸ばします。 */
+@media (min-width: 1001px) {
+  #home.hero {
+    height: auto;
+    min-height: calc(100svh - 100px); /* 既存ヘッダーの高さを除く */
+    max-height: none;
+    aspect-ratio: auto;
+    padding-top: clamp(24px, 4svh, 56px);
+    padding-bottom: clamp(64px, 8svh, 88px);
+    overflow: visible;
+  }
+  #home .eyebrow { margin-bottom: 20px; }
+  #home h1 { margin-bottom: 18px; }
+  #home .intro { margin-bottom: 12px; }
+  #home .button { margin-top: 12px; }
+  #home .hero-caption { margin-top: 20px; }
+  #home .scroll-cue { bottom: 18px; }
+
+  #works, #about, #contact {
+    min-height: 100svh;
+    padding-top: clamp(28px, 5svh, 64px);
+    padding-bottom: clamp(28px, 5svh, 64px);
+    /* ヘッダーは固定されないため、既存のscroll-padding 105pxを相殺します。 */
+    scroll-margin-top: -105px;
+  }
+  #works, #contact {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  #works .section-top { margin-bottom: clamp(24px, 4svh, 40px); }
+  #works .project-card:only-child {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(28px, 4vw, 56px);
+    max-width: 1100px;
+    justify-self: center;
+  }
+  #works .project-card-copy { min-width: 0; }
+  #works .project-card-meta { margin-top: 0; }
+  #works .project-cover .project-image {
+    max-height: clamp(220px, 50svh, 480px);
+    object-fit: contain;
+  }
+
+  #about .about-image {
+    max-width: clamp(240px, calc(80svh - 76.8px), 440px);
+    justify-self: center;
+  }
+  #about .about-copy h2 { margin-bottom: 22px; }
+  #about .about-copy .tool-title { margin-top: 22px; padding-top: 20px; }
+
+  #contact .eyebrow { margin-bottom: 18px; }
+  #contact h2 { margin-bottom: 20px; }
+  #contact .contact-links { width: 100%; margin-top: 24px; }
+  #contact .contact-cats { margin-top: 24px; }
+}

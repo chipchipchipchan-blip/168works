@@ -1,0 +1,15 @@
+/* 参考画像4に合わせた白い壁とグレーの影。Heroだけに適用します。 */
+.hero{background:#fff;padding-left:8%;padding-right:8%}
+.hero-ivory-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:right top;opacity:0;transform:none;transition:opacity 3.6s ease}
+.hero-ivory-photo.visible{opacity:1;transform:none}
+/* 写真の光を残しつつ、本文側のみごく薄く白を重ねます。 */
+.home-scene::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#ffffff24,transparent 54%);pointer-events:none}
+/* HOME背景のみの微調整。--home-light-softeningを0にすると調整前と比較できます。 */
+.home-scene{--home-light-softening:1}
+.home-scene::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.10) 65%);opacity:var(--home-light-softening);pointer-events:none}
+/* PCでは画像の縦横比を保ち、背景全体を覆って左右の余白をなくします。 */
+@media(min-width:1001px){.hero{height:auto;min-height:650px;max-height:none;aspect-ratio:1672/941}.hero-ivory-photo{object-fit:cover;object-position:center bottom}}
+@media(max-width:1000px) and (min-width:701px){.home-scene::after{background:linear-gradient(90deg,#ffffffa8,#ffffff38 65%,transparent 86%)}}
+/* モバイルは右側の影を背景に、本文側をニュートラルな白で保護します。 */
+@media(max-width:700px){.hero{padding-left:7%;padding-right:7%}.hero-ivory-photo{inset:0;width:100%;height:100%;object-position:right top}.home-scene::after{background:linear-gradient(90deg,#fffffff5 0%,#ffffffd9 47%,#ffffff4d 82%,#ffffff24),linear-gradient(180deg,transparent 15%,#ffffff75 50%,transparent 90%)}}
+@media(prefers-reduced-motion:reduce){.hero-ivory-photo,.hero-ivory-photo.visible{opacity:1;transition:none;transform:none}}
