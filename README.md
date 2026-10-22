@@ -4,12 +4,12 @@ React / TypeScript / Vite で作成した、1ページの個人ポートフォ�
 
 ## パソコンで見る方法
 
-1. Node.js の LTS 版をインストールします（https://nodejs.org/ja）。すでに入っていれば不要です。
-2. VS Code でこの `D:\portfolio` フォルダを開きます。
+1. Node.js **24.22.1以降の24系**を使います（https://nodejs.org/ja）。22系では22.23.4以降が必要です。`.node-version` は確認済みのバージョンです。古いNodeでは起動を停止します。
+2. VS Code でこのプロジェクトのフォルダを開きます。
 3. 「ターミナル」→「新しいターミナル」で、次を1行ずつ実行します。
 
 ```powershell
-npm.cmd install
+npm.cmd ci
 npm.cmd run dev
 ```
 
@@ -23,7 +23,7 @@ npm.cmd run dev
 - `works`：作品一覧。配列の中の `{ ... }` をコピーして追加します。`id` は重複しない名前にしてください。
 - `contacts`：メールやSNS。`url` が空欄ならボタンは押せません。メールは `mailto:自分のメールアドレス`、SNSは `https://...` を指定します。
 
-画像は `public/images` に保存し、`image: '/images/sample.jpg'` や `photo: '/images/profile.jpg'` と書きます。仮画像はオリジナルのHTML/CSS/SVGです。猫には顔を描いていません。外部フォント・素材は使っていません。
+画像は `public/images` に保存し、`image: '/images/sample.jpg'` や `photo: '/images/profile.jpg'` と書きます。追加画像は内容・メタデータを確認し、`scripts/pages-assets.mjs` の `pageImages` にも登録してください。登録していない新規ファイルがpublicにあると、誤公開を防ぐためビルドを停止します。仮画像はオリジナルのHTML/CSS/SVGです。猫には顔を描いていません。外部フォント・素材は使っていません。
 
 現在の作品一覧は完成作品「推し活アプリ」1件です。画像・作品詳細は準備中で、詳細には編集用の仮テキストを明記しています。自己紹介・プロフィールのツールも編集用の仮データです。作品の項目や追加方法は [WORKS_GUIDE.md](WORKS_GUIDE.md) を参照してください。
 
@@ -40,23 +40,28 @@ npm.cmd run preview
 
 レスポンシブ表示、URLを持つ作品詳細ページ、スクロール表示、ボタンの色変化、動きを減らす設定への対応を実装しています。作品詳細では見出しにフォーカスが移り、一覧へ戻るリンクとブラウザの戻る操作を利用できます。
 
-お問い合わせフォーム、メール送信、CMS、アクセス解析、公開作業は対象外です。作品のデモ画面は仮素材であり、別のアプリとして動くものではありません。
+お問い合わせフォーム、メール送信、CMS、アクセス解析は実装していません。作品のデモ画面は仮素材であり、別のアプリとして動くものではありません。
 
 ## 今回の確認結果
 
-- 一時フォルダの Node.js 22.14.0 で依存パッケージをインストール済みです。システム全体へのNode.jsのインストールは行っていません。
+- セキュリティ監査を受け、Node.js 24.22.1とVite 6.4.5を使用します。修正済みのNode 22.23.4も検証しています。システム全体のNode.jsは変更していません。
 - `npm run build` が成功し、TypeScriptチェックと本番用ファイルの生成が完了しました。
 - 開発サーバーを起動し、トップページとReactモジュールがHTTP 200で返ることを確認しました。確認用サーバーは終了しています。
 - 今回の公開準備では、ブラウザのPC幅（1440px）・スマートフォン幅（390px）で、ナビゲーション、作品詳細の直接アクセス・再読み込み、画像読み込み、拡大・切り替えを確認しました。実際のスマートフォン端末とキーボード操作全般は未確認です。
 
-このパソコンですぐに起動したい場合は、VS CodeのPowerShellターミナルで、今回準備した一時環境を使う次のコマンドも利用できます。
+このパソコンでは、公式配布のSHA-256を照合したNode.jsをユーザーのローカルアプリ領域に保存しています。`.vscode/settings.json` により、このプロジェクトの新しいVS Codeターミナルは修正版を優先します。既存の開発サーバーはそのターミナルで `Ctrl + C` で終了し、新しいターミナルで `node --version` と `npm.cmd run dev` を実行してください。PATHを手動設定する場合は次を使います。
 
 ```powershell
-$env:PATH = "$env:TEMP/portfolio-runtime/node-v22.14.0-win-x64;" + $env:PATH
+$env:PATH = "$env:LOCALAPPDATA/168works-runtime/node-v24.22.1-win-x64;" + $env:PATH
+node --version
 npm.cmd run dev
 ```
 
-一時フォルダが削除された場合は、最初の手順に沿ってNode.jsをインストールしてください。
+このフォルダを削除した場合や別のPCでは、最初の手順に沿って修正済みのNode.jsを用意してください。古い一時Node.js環境は使わないでください。
+
+## セキュリティと更新
+
+[セキュリティ運用メモ](SECURITY.md) に、PR・必須チェック、依存更新、公開ファイルの検査、GitHub Pagesで設定できないヘッダーの制約を記載しています。本番HTMLにはCSPとno-referrerを適用し、noindexを維持します。開発時はViteの自動更新のためCSPを挿入しません。
 
 ## 光と影のデザインを編集する
 
@@ -64,6 +69,6 @@ npm.cmd run dev
 - `src/HomeScene.tsx`：HOMEの窓辺と白猫・黒猫。文章や作品データとは別のファイルです。
 - `src/home.css`：HOMEの基本構図と猫のしっぽの動き。
 - `src/editorial.css`：HOME・Works・Aboutの仕上げ調整。影の濃さは写真の `opacity`、余白は `padding` や `gap` で調整できます。
-- `public/images/botanical-light-original.png`：内蔵画像生成ツールで作成したオリジナルの写真風素材。生成条件は同じフォルダの `ASSET-NOTES.md` に記録しています。
+- `public/images/botanical-light-original.png`：内蔵画像生成ツールで作成したオリジナルの写真風素材。制作メモはローカル保管に移し、今後の公開対象から外しています。過去のGit履歴には残ります。
 
 Aboutは植物の影の画像と指定SVGのお花を表示します。`profile.photo` を設定した場合の画像差し替え機能は維持しています。現在のWorksと作品詳細の見た目は `src/projects.css` で管理し、過去の仮作品カードは表示しません。
