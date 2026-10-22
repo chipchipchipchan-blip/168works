@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { works, type Work } from './data';
+import { assetUrl } from './assetUrl';
 import './projects.css';
 
 type ZoomPosition = { scale: number; x: number; y: number };
@@ -33,7 +34,7 @@ function ZoomableScreenshot({ src, caption }: { src: string; caption: string }) 
     setDragging(points.current.size > 0);
   };
 
-  return <img ref={imageRef} src={src} alt={caption} draggable={false} tabIndex={0} role="button"
+  return <img ref={imageRef} src={assetUrl(src)} alt={caption} draggable={false} tabIndex={0} role="button"
     aria-label={`${caption}：${zoom.scale > 1 ? '元のサイズに戻す' : '2倍に拡大する'}。拡大中はドラッグ、タッチではピンチ操作ができます`}
     className={`screenshot-zoomable${zoom.scale > 1 ? ' is-zoomed' : ''}${dragging ? ' is-dragging' : ''}`}
     style={{ transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.scale})` }}
@@ -75,7 +76,7 @@ function ZoomableScreenshot({ src, caption }: { src: string; caption: string }) 
 }
 
 export function ProjectImage({ src, name, caption }: { src: string; name: string; caption?: string }) {
-  return src ? <img className="project-image" src={src} alt={caption || `${name}の制作画面`} loading="lazy"/> :
+  return src ? <img className="project-image" src={assetUrl(src)} alt={caption || `${name}の制作画面`} loading="lazy"/> :
     <div className="project-placeholder"><span>PROJECT IMAGE</span><p>作品画像を準備中です</p><small>実際のアプリ画面を後から掲載します</small></div>;
 }
 

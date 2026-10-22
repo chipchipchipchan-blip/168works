@@ -1,5 +1,7 @@
+import { assetUrl } from './assetUrl';
+
 // 植物影の画像。画像の差し替え先はこの定数だけです。
-export const botanicalLightImage = '/images/botanical-light-original.png';
+export const botanicalLightImage = assetUrl('/images/botanical-light-original.png');
 
 export function LineFlower({ className = '' }: { className?: string }) {
   return <svg className={`line-flower ${className}`} viewBox="0 0 90 140" fill="none" aria-hidden="true">
@@ -15,7 +17,7 @@ export function AboutLight() {
     <img className="about-light-photo reveal" src={botanicalLightImage} alt="" loading="lazy" width="1536" height="1024"/>
     <img
       className="about-line-flower"
-      src="/images/flower_B_trace.svg"
+      src={assetUrl('/images/flower_B_trace.svg')}
       alt=""
       width="520"
       height="1350"
