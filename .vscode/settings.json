@@ -1,0 +1,5 @@
+{
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:LOCALAPPDATA}\\168works-runtime\\node-v24.22.1-win-x64;${env:PATH}"
+  }
+}
