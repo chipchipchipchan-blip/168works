@@ -33,7 +33,7 @@ jobs:
           check-latest: true
           cache: npm
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-audit
       - name: Check toolchain security baseline
         run: npm run security:check
       - name: Audit all dependencies
